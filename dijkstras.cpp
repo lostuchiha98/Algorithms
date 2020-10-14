@@ -56,9 +56,7 @@ signed main(){
     int startPoint;
     cin>>startPoint;
 
-    for(int i=0;i<nodes;i++){
-        if(i==startPoint)
-            dijkstra(i,0,nodes);
-    }
+    dijkstra(startPoint,0,nodes);
+   
 
 }
