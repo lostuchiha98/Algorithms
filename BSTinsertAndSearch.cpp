@@ -46,7 +46,7 @@ void SearchAndInsert(node* Node,node*& root){
         SearchAndInsert(Node,root->right);
 
     else
-        return ;
+        return ;   //if there is duplicate element no need to insert!
     
 }
 
