@@ -16,6 +16,7 @@ class node{
 
 node* root=NULL;
 
+//Breadth First Search ===========> NOT REQUIRED ONLY FOR VISUALISATION
 void bfs(node* start){
 
     queue<node*> que;
@@ -32,6 +33,62 @@ void bfs(node* start){
     }   
 }
 
+void Inorder(node* start){
+    node* Node=start;
+
+    if(Node==NULL)
+        return;
+
+    Inorder(Node->left);
+    cout<<Node->data<<" ";
+    Inorder(Node->right);
+}
+
+node* maxLeftSubTree(node*&subRoot){
+    node* currNode;
+    if(subRoot->right==NULL){
+        currNode=subRoot;
+        subRoot=NULL;
+
+        return currNode;
+    }
+
+    maxLeftSubTree(subRoot->right);
+    
+}
+
+
+
+void Delete(int d,node* &root){
+
+    if(root->data>d)  Delete(d,root->left);
+    else if(root->data<d) Delete(d,root->right);
+    else{
+
+        if(root->left == NULL && root->right == NULL){
+            root=NULL;      //deleting a leaf node 
+        }
+
+        else if(root->left == NULL || root->right == NULL){
+            if(root->left!=NULL){
+                root=root->left;   //deleting a parent node with one child
+            }
+            else{
+                root=root->right;
+            }
+        }
+
+        else{
+            node* maxSubNode = maxLeftSubTree(root->left);  //parent node with two child
+            maxSubNode->left=root->left;
+            maxSubNode->right=root->right;
+            root=maxSubNode;
+        }
+    }
+}
+
+
+
 void SearchAndInsert(node* Node,node*& root){
 
     if(root==NULL){
@@ -46,7 +103,7 @@ void SearchAndInsert(node* Node,node*& root){
         SearchAndInsert(Node,root->right);
 
     else
-        return ;   //if there is duplicate element no need to insert!
+        return ;
     
 }
 
@@ -60,15 +117,23 @@ void insert(int d){
 }
 
 int main(){
-    insert(4);
-    insert(1);
-    insert(5);
-    insert(9);
-    insert(7);
-    insert(11);
+    insert(16);
     insert(12);
-    insert(15);
-    insert(1);
-
-    bfs(root);
+    insert(18);
+    insert(8);
+    insert(14);
+    insert(17);
+    insert(19);
+    insert(7);
+    insert(10);
+    insert(20);
+    insert(9);
+    insert(11);
+    insert(21);
+    insert(22);
+    Delete(8,root);
+    Delete(16,root);
+    Delete(19,root);
+    Inorder(root);  //is used to get the element from the tree in sorted order
+    // bfs(root);
 }
